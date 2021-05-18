@@ -1,0 +1,54 @@
+version: "3.9"
+   
+services:
+  web:
+    build: ./
+    volumes:
+      - /web:/projectpersephone 
+    ports:
+      - 8000:8000
+    expose:
+      - 8000
+      - 6379
+    env_file:
+      - env.dev
+    depends_on:
+      - db
+  db:
+    image: postgres
+    hostname: db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:alpine
+    privileged: true
+    ports:
+      - 6379:6379
+  celery:
+    restart: always
+    command: celery -A core worker -l info
+    build:
+      context: .
+    volumes:
+      - ./web:/projectpersephone
+    environment:
+      - DB_HOST=db
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_PORT=5432
+    depends_on:
+      - db
+      - redis
+      - web
+volumes:
+  postgres_data:
+
