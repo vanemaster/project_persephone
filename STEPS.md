@@ -19,7 +19,7 @@
 
 ## How to build:
 
-Download the content of this repository, then go inside <strong>dafiti_shoes</strong> folder and run <pre>docker-compose up --build</pre> and after you hit Enter all should be set. Enjoy a cup of coffee while Docker does the work.
+Download the content of this repository, then go inside <strong>project_persephone</strong> folder and run <pre>docker-compose up --build</pre> and after you hit Enter all should be set. Enjoy a cup of coffee while Docker does the work.
 
 ---
 
