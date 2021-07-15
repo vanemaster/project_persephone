@@ -2,9 +2,11 @@ version: "3.9"
    
 services:
   web:
+    restart: always
     build: ./
     volumes:
-      - /web:/projectpersephone 
+      - /web:/projectpersephone
+      - .:/code
     ports:
       - 8000:8000
     expose:
@@ -14,6 +16,7 @@ services:
       - env.dev
     depends_on:
       - db
+    command: gunicorn projectpersephone.wsgi:application --bind 0.0.0.0:8000 --workers=3 --reload
   db:
     image: postgres
     hostname: db
@@ -32,23 +35,23 @@ services:
     privileged: true
     ports:
       - 6379:6379
-  celery:
-    restart: always
-    command: celery -A core worker -l info
-    build:
-      context: .
-    volumes:
-      - ./web:/projectpersephone
-    environment:
-      - DB_HOST=db
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DB_PORT=5432
-    depends_on:
-      - db
-      - redis
-      - web
+  # celery:
+  #   restart: always
+  #   command: celery -A core worker -l info
+  #   build:
+  #     context: .
+  #   volumes:
+  #     - ./web:/projectpersephone
+  #   environment:
+  #     - DB_HOST=db
+  #     - DB_NAME=postgres
+  #     - DB_USER=postgres
+  #     - DB_PASS=postgres
+  #     - DB_PORT=5432
+  #   depends_on:
+  #     - db
+  #     - redis
+  #     - web
 volumes:
   postgres_data:
 

@@ -25,7 +25,7 @@ Download the content of this repository, then go inside <strong>project_persepho
 
 ## Populate Database:
 
-After everything is up and running, list your containers with <pre>docker container ls</pre> and get the ID from the container which has the <strong>web</strong> service in it. It should be called "projectpersephone_web" or similar. After that, run the following comand to load the fixture file inside PostgreSQL:
+After everything is up and running, list your containers with <pre>docker container ls</pre> and get the ID from the container which has the <strong>web</strong> service in it. It should be called "src_web" or similar. After that, run the following comand to load the fixture file inside PostgreSQL:
 <pre>docker exec -it #container ID# python manage.py loaddata women_shoes/fixtures/women_shoes.json</pre>
 It should populate nearly 1041 rows.
 

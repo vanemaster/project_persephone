@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'projectpersephone',
     'women_shoes',
+    'checkapi',
     'rest_framework'
 ]
 
@@ -61,6 +62,7 @@ TEMPLATES = [
         'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug':True,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
