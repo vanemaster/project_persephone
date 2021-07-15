@@ -13,19 +13,7 @@ def uploadDatabase(request):
     template_view = "upload.html"
     result = False
 
-    user = os.environ.get("SQL_USER")
-    password = os.environ.get("SQL_PASSWORD")
-    database_name = os.environ.get("SQL_DATABASE")
-
-    database_url = 'postgresql+psycopg2://{user}:{password}@172.17.0.1:5432/{database_name}'.format(
-        user=user,
-        password=password,
-        database_name=database_name,
-    )
-
     # database_url = 'postgresql://postgres:postgres@172.17.0.1:5432/postgres'
-
-    engine = create_engine(database_url, echo=False)
     
     if request.method == 'POST':
         csv_file = request.FILES['file']
@@ -33,6 +21,18 @@ def uploadDatabase(request):
         # let's check if it is a csv file
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'THIS IS NOT A CSV FILE')
+
+        user = os.environ.get("SQL_USER")
+        password = os.environ.get("SQL_PASSWORD")
+        database_name = os.environ.get("SQL_DATABASE")
+
+        database_url = 'postgresql://{user}:{password}@172.17.0.1:5432/{database_name}'.format(
+            user=user,
+            password=password,
+            database_name=database_name,
+        )
+
+        engine = create_engine(database_url, echo=False)
 
         data_frame = pd.read_csv(csv_file)   
         

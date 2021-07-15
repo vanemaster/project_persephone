@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'projectpersephone',
     'women_shoes',
     'checkapi',
-    'rest_framework'
+    'rest_framework',
+    'drf_generators'
 ]
 
 MIDDLEWARE = [
